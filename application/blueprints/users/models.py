@@ -1,7 +1,8 @@
 from flask_login import UserMixin
 from werkzeug.security import generate_password_hash, check_password_hash
-from chat.extensions import db
+from application.extensions import db
 from datetime import datetime
+
 
 class User(UserMixin, db.Model):
     """User Model """
@@ -14,6 +15,7 @@ class User(UserMixin, db.Model):
     firstname = db.Column(db.String(100), nullable=False)
     lastname = db.Column(db.String(100), nullable=False)
     password = db.Column(db.String(250), unique=True, nullable=False)
+    posts = db.relationship('Post', backref=db.backref('posts',lazy=True))
     created_on = db.Column(db.DateTime,default=datetime.utcnow)
     
 

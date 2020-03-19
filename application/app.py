@@ -1,3 +1,13 @@
+from flask import Flask
+# Blueprints import
+from application.blueprints.users import user
+from application.blueprints.posts import mypost
+from application.extensions import db,login_manager,migrate
+
+#Models import
+from application.blueprints.users.models import User
+from application.blueprints.posts.models import Post
+
 
 def create_app(settings_override=None):
     """
@@ -15,6 +25,7 @@ def create_app(settings_override=None):
         app.config.update(settings_override)
 
     app.register_blueprint(user)
+    app.register_blueprint(mypost)
     extensions(app)
     return app
 
@@ -29,5 +40,7 @@ def extensions(app):
 
     db.init_app(app)
     login_manager.init_app(app)
+    migrate.init_app(app,db)
+    
 
     return None
