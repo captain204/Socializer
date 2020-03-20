@@ -49,10 +49,12 @@ def post():
 
 
 #Update Post
-@mypost.route('/post/update/<id>',methods=['GET','POST'])
+@mypost.route('/update',methods=['GET','POST'])
 #@login_required
-def update(id):
+def update():
+    id = 3
     post =  Post.query.filter_by(id=id).first()
+    #post = Post.query.get(id)
     form = PostForm(request.form)
     form.body.data = post.body
     if request.method == 'POST':
@@ -60,17 +62,16 @@ def update(id):
             body = request.form.get('body')
             #user_id = current_user.id
             post.body = body
-            post.id = id
-            db.session.query(Post).filter_by(id=id).update({"body":body})
+            #db.session.query(Post).filter_by(id=id).update({"body":body})
             db.session.commit()
             #db.session.add(post)
-            #db.session.commit()
+            db.session.commit()
             return redirect(url_for('mypost.post'))
             flash("Post updated successfully")
         else:
             flash("Something went wrong while sending your post")
             return redirect(url_for('mypost.post'))
-    return render_template('add_post.html', form=form)
+    return render_template('edit_post.html', form=form)
     
 
 
