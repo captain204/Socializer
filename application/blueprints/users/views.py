@@ -22,6 +22,11 @@ from application.blueprints.users.forms import (
      SignupForm,
      LoginForm)
 
+
+from application.blueprints.posts.models import(
+     Post) 
+
+
 user = Blueprint('user', __name__, template_folder='templates')
 
 
@@ -44,9 +49,9 @@ def signup():
                 db.session.add(user)
                 db.session.commit()
                 login_user(user)
-                return redirect(url_for('user.dashboard'))
+                return redirect(url_for('user.feeds'))
             flash('A user already exists with that email address.')
-            return redirect(url_for('user.dashboard'))
+            return redirect(url_for('user.login'))
     # GET: Serve Sign-up page
     return render_template('signup.html', form=form)
 
@@ -72,7 +77,7 @@ def login():
                     login_user(user)
                     next = request.args.get('next')
                     session['user_id'] = user.id
-                    return redirect(next or url_for('user.dashboard'))
+                    return redirect(next or url_for('user.feeds'))
         flash('Invalid username/password combination')
         return redirect(url_for('user.login'))
     #GET: Serve Log-in page
@@ -80,10 +85,12 @@ def login():
 
 
 
-@user.route('/dashboard', methods=['GET','POST'])
+@user.route('/feeds', methods=['GET','POST'])
 @login_required
-def dashboard():
-    return render_template('feeds.html')
+def feeds():
+    user_id = current_user.id
+    post =  Post.query.filter_by(user_id=user_id).all()
+    return render_template('feeds.html', mypost = post)
 
 
 @user.route("/logout")

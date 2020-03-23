@@ -1,6 +1,6 @@
 {% extends 'layouts/user.html' %}
 {% block body %}
-      <form action="/user.login" method="POST" class="login100-form validate-form flex-sb flex-w">
+      <form action="/login" method="POST" class="login100-form validate-form flex-sb flex-w">
         <span class="login100-form-title p-b-53">
           Sign In With
         </span>
@@ -21,7 +21,7 @@
           </span>
         </div>
         <div class="wrap-input100 validate-input" data-validate = "Username is required">
-          <input class="input100" type="text" name="username" >
+          <input class="input100" type="text" name="email" >
           <span class="focus-input100"></span>
         </div>
         
