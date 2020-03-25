@@ -1,0 +1,20 @@
+{% extends 'layouts/post.html' %}
+{% block body %}
+
+
+        {% for person in group %}
+
+        <div class="card text-center">
+            <div class="card-body">
+                <p class="card-text">
+                    <a href="">{{person.username}}</a>            
+                </p>
+                <p class="card-text">
+                   <a href="" class="btn btn-primary">Follow</a>            
+                </p>
+            </div>
+        </div>
+        {%endfor%}
+
+
+{%endblock%}

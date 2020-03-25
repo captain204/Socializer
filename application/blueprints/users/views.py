@@ -93,6 +93,22 @@ def feeds():
     return render_template('feeds.html', mypost = post)
 
 
+@user.route('/myprofile', methods=['GET', 'POST'])
+@login_required
+def myprofile():
+    id = current_user.id
+    user = User.query.filter_by(id = id).first()
+    return render_template('profile.html',user = user)
+
+@user.route('/people', methods=['GET','POST'])
+@login_required
+def people():
+    #id = current_user.id
+    #people = User.query.filter_by(id = id).all()
+    people = User.query.all()
+    return render_template('people.html',group=people)
+
+
 @user.route("/logout")
 @login_required
 def logout_page():

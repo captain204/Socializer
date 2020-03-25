@@ -29,7 +29,7 @@ mypost = Blueprint('mypost', __name__, template_folder='templates')
 
 
 @mypost.route('/post', methods=['GET','POST'])
-#@login_required
+@login_required
 def post():
     """Add new Post"""
     form = PostForm(request.form)
@@ -50,7 +50,7 @@ def post():
 
 #Update Post
 @mypost.route('/update',methods=['GET','POST'])
-#@login_required
+@login_required
 def update():
     id = 3
     post =  Post.query.filter_by(id=id).first()
@@ -75,6 +75,11 @@ def update():
     
 
 
+
+@mypost.route('/allpost', methods=['GET'])
+@login_required
+def allpost():
+    all_
 
 
 #Delete Post

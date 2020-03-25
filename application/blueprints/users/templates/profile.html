@@ -1,0 +1,26 @@
+{% extends 'layouts/post.html' %}
+{% block body %}
+
+
+        
+        <h1 class="text-center">My Profile</h1>
+        <div class="card text-center">
+            <div class="card-body">
+                <p class="card-text">
+                  Username: {{user.username}}         
+                </p>
+                <p class="card-text">
+                    Email: {{user.username}}            
+                </p>
+                <p class="card-text">
+                    Fullname: {{user.firstname}} {{user.firstname}}            
+                </p>
+                <p class="card-text">
+                   <a href="" class="btn btn-primary">Update</a>            
+                </p>
+            </div>
+        </div>
+        
+
+
+{%endblock%}
