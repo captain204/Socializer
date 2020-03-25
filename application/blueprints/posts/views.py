@@ -79,7 +79,8 @@ def update():
 @mypost.route('/allpost', methods=['GET'])
 @login_required
 def allpost():
-    all_
+    all_post = Post.query.all()
+    return render_template('allposts.html',posts=all_post)
 
 
 #Delete Post

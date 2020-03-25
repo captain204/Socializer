@@ -49,7 +49,7 @@ def signup():
                 db.session.add(user)
                 db.session.commit()
                 login_user(user)
-                return redirect(url_for('user.feeds'))
+                return redirect(url_for('mypost.allpost'))
             flash('A user already exists with that email address.')
             return redirect(url_for('user.login'))
     # GET: Serve Sign-up page
@@ -62,7 +62,7 @@ def login():
     """User login page."""
     # Bypass Login screen if user is logged in
     if current_user.is_authenticated:
-        return redirect(url_for('user.dashboard'))
+        return redirect(url_for('user.feeds'))
     form = LoginForm(request.form)
     # POST: Create user and redirect them to the app
     if request.method == 'POST':
@@ -77,7 +77,7 @@ def login():
                     login_user(user)
                     next = request.args.get('next')
                     session['user_id'] = user.id
-                    return redirect(next or url_for('user.feeds'))
+                    return redirect(next or url_for('mypost.allpost'))
         flash('Invalid username/password combination')
         return redirect(url_for('user.login'))
     #GET: Serve Log-in page
