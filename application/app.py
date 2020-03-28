@@ -2,6 +2,7 @@ from flask import Flask
 # Blueprints import
 from application.blueprints.users import user
 from application.blueprints.posts import mypost
+#from application.blueprints.follows import follow
 from application.extensions import db,login_manager,migrate
 
 #Models import
@@ -27,6 +28,7 @@ def create_app(settings_override=None):
 
     app.register_blueprint(user)
     app.register_blueprint(mypost)
+    #app.register_blueprint(follow)
     extensions(app)
     return app
 

@@ -25,10 +25,10 @@ class User(UserMixin, db.Model):
                                lazy='dynamic',
                                cascade='all, delete-orphan')
     followers = db.relationship('Follow',
-                                foreign_keys=[Follow.followed_id],
-                                backref=db.backref('followed', lazy='joined'),
-                                lazy='dynamic',
-                                cascade='all, delete-orphan')
+                              foreign_keys=[Follow.followed_id],
+                              backref=db.backref('followed', lazy='joined'),
+                              lazy='dynamic',
+                              cascade='all, delete-orphan')
     created_on = db.Column(db.DateTime,default=datetime.utcnow)
     
 
@@ -39,6 +39,35 @@ class User(UserMixin, db.Model):
     def check_password(self,password):
         """Check Hashed Password"""
         return check_password_hash(self.password,password)
+
+    def is_following(self, user):
+        if user.id is None:
+            return False
+        return self.followed.filter_by(followed_id=user.id).first() is not None
+
+    def is_followed_by(self, user):
+        if user.id is None:
+            return False
+        return self.followers.filter_by(
+            follower_id=user.id).first() is not None
+    
+    def follow(self, user):
+        if not self.is_following(user):
+            user_feed.follow("User", str(user.id))
+            f = Follow(follower=self, followed=user)
+            db.session.add(f)
+            return True
+
+    def unfollow(self, user):
+        f = self.followed.filter_by(followed_id=user.id).first()
+        if f:
+            user_feed.unfollow("User", str(user.id))
+            db.session.delete(f)
+            return True
+    
+
+
+    
 
     def __repr__(self):
         return '<User {}>'.format(self.username)

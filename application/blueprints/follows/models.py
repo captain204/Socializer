@@ -14,4 +14,3 @@ class Follow(db.Model):
 
 
 
-
