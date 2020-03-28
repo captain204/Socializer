@@ -2,6 +2,9 @@ from flask_login import UserMixin
 from werkzeug.security import generate_password_hash, check_password_hash
 from application.extensions import db
 from datetime import datetime
+from application.blueprints.follows.models import(
+     Follow) 
+
 
 
 class User(UserMixin, db.Model):
@@ -16,6 +19,16 @@ class User(UserMixin, db.Model):
     lastname = db.Column(db.String(100), nullable=False)
     password = db.Column(db.String(250), unique=True, nullable=False)
     posts = db.relationship('Post', backref=db.backref('posts',lazy=True))
+    followed = db.relationship('Follow',
+                               foreign_keys=[Follow.follower_id],
+                               backref=db.backref('follower', lazy='joined'),
+                               lazy='dynamic',
+                               cascade='all, delete-orphan')
+    followers = db.relationship('Follow',
+                                foreign_keys=[Follow.followed_id],
+                                backref=db.backref('followed', lazy='joined'),
+                                lazy='dynamic',
+                                cascade='all, delete-orphan')
     created_on = db.Column(db.DateTime,default=datetime.utcnow)
     
 

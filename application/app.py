@@ -7,6 +7,7 @@ from application.extensions import db,login_manager,migrate
 #Models import
 from application.blueprints.users.models import User
 from application.blueprints.posts.models import Post
+from application.blueprints.follows.models import Follow
 
 
 def create_app(settings_override=None):
