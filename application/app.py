@@ -2,7 +2,6 @@ from flask import Flask
 # Blueprints import
 from application.blueprints.users import user
 from application.blueprints.posts import mypost
-#from application.blueprints.follows import follow
 from application.extensions import db,login_manager,migrate
 
 #Models import

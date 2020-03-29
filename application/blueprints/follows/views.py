@@ -1,28 +1,5 @@
-"""from flask import (
-    Blueprint,
-    redirect,
-    request,
-    flash,
-    url_for,
-    render_template,session)
-from flask_login import (
-    login_required,
-    login_user,
-    current_user,
-    logout_user)
-
-from application.extensions import db,login_manager
-
-from application.blueprints.users.models import(
-     User) 
-
-
- 
-follow = Blueprint('follow', __name__, template_folder='templates')
-
-
-
-@follow.route('/follows/<username>', methods=['GET','POST'])
+"""
+@user.route('/follows/<username>', methods=['GET','POST'])
 @login_required
 def follow(username):
     user = User.query.filter_by(username=username).first()
@@ -38,7 +15,7 @@ def follow(username):
     return redirect(url_for('user.people', username=username))
 
 
-@follow.route('/unfollow/<username>', methods=['GET','POST'])
+@user.route('/unfollow/<username>', methods=['GET','POST'])
 @login_required
 def unfollow(username):
     user = User.query.filter_by(username=username).first()
@@ -52,4 +29,3 @@ def unfollow(username):
     db.session.commit()
     flash('You are no longer following {username}'.format(username = user.username))
     return redirect(url_for('user.people'))
-"""

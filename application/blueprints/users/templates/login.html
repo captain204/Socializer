@@ -1,6 +1,6 @@
 {% extends 'layouts/user.html' %}
 {% block body %}
-      <form action="/login" method="POST" class="login100-form validate-form flex-sb flex-w">
+      <form action="/" method="POST" class="login100-form validate-form flex-sb flex-w">
         <span class="login100-form-title p-b-53">
           Sign In With
         </span>
@@ -11,7 +11,7 @@
         </a>
 
         <a href="#" class="btn-google m-b-20">
-          <img src="images/icons/icon-google.png" alt="GOOGLE">
+          <img src="{{url_for('static', filename ='images/icons/icon-google.png')}}" alt="GOOGLE">
           Google
         </a>
         
@@ -49,7 +49,7 @@
             Not a member?
           </span>
 
-          <a href="#" class="txt2 bo1">
+          <a href="/signup" class="txt2 bo1">
             Sign up now
           </a>
         </div>

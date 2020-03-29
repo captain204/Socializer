@@ -57,7 +57,7 @@ def signup():
 
 
 
-@user.route('/login', methods=['GET','POST'])
+@user.route('/', methods=['GET','POST'])
 def login():
     """User login page."""
     # Bypass Login screen if user is logged in
@@ -107,6 +107,39 @@ def people():
     #people = User.query.filter_by(id = id).all()
     people = User.query.all()
     return render_template('people.html',group=people)
+
+@user.route('/follows/<username>', methods=['GET','POST'])
+@login_required
+def follow(username):
+    user = User.query.filter_by(username=username).first()
+    #return render_template('people.html',group=people)
+    if user is None:
+        flash('Invalid user.')
+        return redirect(url_for('user.people'))
+    if current_user.is_following(user):
+        flash('You are already following {username}'.format(username=user.username))
+        return redirect(url_for('user.people'))
+    current_user.follow(user)
+    db.session.commit()
+    flash('You are now following {username}'.format(username=user.username))
+    return redirect(url_for('user.people'))
+
+
+@user.route('/unfollow/<username>', methods=['GET','POST'])
+@login_required
+def unfollow(username):
+    user = User.query.filter_by(username=username).first()
+    if user is None:
+        flash('Invalid user.')
+        return redirect(url_for('user.people'))
+    if not current_user.is_following(user):
+        flash('You are not following {username}'.format(username = user.username))
+        return redirect(url_for('user.people'))
+    current_user.unfollow(user)
+    db.session.commit()
+    flash('You are no longer following {username}'.format(username = user.username))
+    return redirect(url_for('user.people'))
+
 
 
 @user.route("/logout")

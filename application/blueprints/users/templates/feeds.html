@@ -9,7 +9,9 @@
                 <p class="card-text">
                     {{post.body}}            
                 </p>
-            
+                <p><a href="/update/{{post.id}}" class="btn btn-primary">Update</a>
+                    <a href="/delete/{{post.id}}" class="btn btn-primary">Delete</a>
+                </p>
             </div>
         </div>
         {%endfor%}

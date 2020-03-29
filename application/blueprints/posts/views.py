@@ -49,11 +49,11 @@ def post():
 
 
 #Update Post
-@mypost.route('/update',methods=['GET','POST'])
+@mypost.route('/update/<id>',methods=['GET','POST'])
 @login_required
-def update():
-    id = 3
-    post =  Post.query.filter_by(id=id).first()
+def update(id):
+    post_id =id
+    post =  Post.query.filter_by(id=post_id).first()
     #post = Post.query.get(id)
     form = PostForm(request.form)
     form.body.data = post.body
@@ -84,9 +84,8 @@ def allpost():
 
 
 #Delete Post
-@mypost.route('/delete/<id>', methods=['POST'])
+@mypost.route('/delete/<id>', methods=['GET'])
 @login_required
 def delete(id):
     Post.query.filter_by(id=id).delete()
-    delete.session.commit()
     return redirect(url_for('user.feeds'))

@@ -52,22 +52,21 @@ class User(UserMixin, db.Model):
             follower_id=user.id).first() is not None
     
     def follow(self, user):
-        if not self.is_following(user):
-            user_feed.follow("User", str(user.id))
+       if not self.is_following(user):
             f = Follow(follower=self, followed=user)
-            db.session.add(f)
-            return True
+            db.session.add(f) 
+
 
     def unfollow(self, user):
         f = self.followed.filter_by(followed_id=user.id).first()
         if f:
-            user_feed.unfollow("User", str(user.id))
+            f = self.followed.filter_by(followed_id=user.id).first()
             db.session.delete(f)
             return True
     
 
 
-    
+
 
     def __repr__(self):
         return '<User {}>'.format(self.username)
